@@ -4,24 +4,26 @@ import DailyReport from "./DailyReport/DailyReport";
 import MorningShift from "./MorningShift/MorningShift";
 import EveningShift from "./EveningShift/EveningShift";
 import MonthReport from "./MonthReport/MonthReport";
+import Table from "../Table/Table";
 
 const HomeComponent = () => {
   return (
     <>
-    <div>
-    <div className=" py-5">
-       <MonthReport></MonthReport>
-      </div>
-      <div className="flex justify-center gap-5 py-10">
-      <WeekReport></WeekReport>
-        <DailyReport></DailyReport>
-        
-        <MorningShift></MorningShift>
-        <EveningShift></EveningShift>
+      <div>
+        <div className=" py-5">
+          <MonthReport></MonthReport>
+        </div>
+        <div className="flex justify-center gap-5 py-10">
+          <WeekReport></WeekReport>
+          <DailyReport></DailyReport>
+
+          <MorningShift></MorningShift>
+          <EveningShift></EveningShift>
+        </div>
       </div>
 
-    </div>
-      
+
+      <Table></Table>
     </>
   );
 };

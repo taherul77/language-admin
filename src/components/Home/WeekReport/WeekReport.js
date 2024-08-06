@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   ChartConfig,
@@ -31,10 +31,11 @@ const chartConfig = {
     color: "#ff0000",
   },
 };
+
 const WeekReport = () => {
   return (
     <>
-      <ChartContainer config={chartConfig} className="h-[200px] ">
+      <ChartContainer config={chartConfig} className="h-[250px] ">
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
@@ -43,6 +44,13 @@ const WeekReport = () => {
             tickMargin={10}
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 3)}
+          />
+          <YAxis
+            tickCount={5}  // Adjust number of ticks as needed
+            tickLine={false}
+            axisLine={false}
+            tickMargin={10}
+            ticks={[0, 100, 200, 300, 400]}  // Custom tick values
           />
           <ChartTooltip content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />

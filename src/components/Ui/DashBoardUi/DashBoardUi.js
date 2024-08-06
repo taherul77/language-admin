@@ -6,6 +6,7 @@ import Nav from "../Nav";
 const DashBoardUi = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [showQuickBar, setShowQuickBar] = useState(true);
+
   return (
     <div className="flex justify-between transition-transform duration-500 ease-in-out">
       <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -25,10 +26,9 @@ const DashBoardUi = ({ children }) => {
         <div className="bg-gray min-h-[calc(100vh-72px)]">
           <div
             className={`${
-              showSidebar ? "mx-[1vw]" : "ml-[7vw] mx-[1vw]"
-            } h-[100%] flex flex-col justify-between `}
+              showSidebar ? "mx-[1vw] mt-16" : "ml-[7vw] mx-[1vw] mt-16"
+            } h-[100%] flex flex-col justify-between transition-all duration-500 ease-in-out`}
           >
-            {" "}
             {children}
           </div>
         </div>
