@@ -35,7 +35,7 @@ const chartConfig = {
 const WeekReport = () => {
   return (
     <>
-      <ChartContainer config={chartConfig} className="h-[250px] ">
+      <ChartContainer config={chartConfig} className="h-[230px] ">
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis

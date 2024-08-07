@@ -155,12 +155,10 @@ const MonthReport = () => {
               className="w-[160px] rounded-lg sm:ml-auto"
               aria-label="Select a value"
             >
-              <SelectValue placeholder="Last 3 months" />
+              <SelectValue placeholder="Last 30 days" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
-              <SelectItem value="90d" className="rounded-lg">
-                Last 3 months
-              </SelectItem>
+             
               <SelectItem value="30d" className="rounded-lg">
                 Last 30 days
               </SelectItem>

@@ -19,11 +19,11 @@ export function DataTableToolbar({ table }) {
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() ?? "")}
+          value={(table.getColumn("id")?.getFilterValue() ?? "")}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("id")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-[200px] lg:w-[300px]"
         /> 
         {table.getColumn("status") && (
           <DataTableFacetedFilter

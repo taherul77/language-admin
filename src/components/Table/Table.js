@@ -6,7 +6,7 @@ import  tasks  from "./Data/task.json";
 const Table = () => {
   
   return (
-    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+    <div className=" flex flex-col p-8">
       <DataTable data={tasks}  />
     </div>
   );

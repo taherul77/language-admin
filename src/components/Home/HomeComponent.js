@@ -13,17 +13,16 @@ const HomeComponent = () => {
         <div className=" py-5">
           <MonthReport></MonthReport>
         </div>
-        <div className="flex justify-center gap-5 py-10">
+        <div className="flex flex-wrap justify-center gap-5 py-5">
           <WeekReport></WeekReport>
           <DailyReport></DailyReport>
 
           <MorningShift></MorningShift>
           <EveningShift></EveningShift>
         </div>
+
+        <Table></Table>
       </div>
-
-
-      <Table></Table>
     </>
   );
 };

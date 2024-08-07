@@ -13,7 +13,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/Ui/table';
-import { staticColumns } from './Columns';
+import { staticColumns } from './columns';
 import { DataTablePagination } from './DataTablePagination';
 import { DataTableToolbar } from './DataTableToolbar';
 
