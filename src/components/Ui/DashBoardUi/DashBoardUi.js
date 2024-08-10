@@ -1,66 +1,40 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { HiOutlineMenu, HiOutlineMenuAlt2 } from "react-icons/hi";
 import { Archive, ArchiveX, File, Inbox, Send, Trash2 } from "lucide-react";
 import SidebarProfile from "../SidebarProfile/SidebarProfile";
 import { UserNav } from "@/components/Table/TableComponents/UserNav";
 import SidebarComponent from "../SidebarComponent/SidebarComponent";
-import { TooltipProvider } from '../tooltip';
-
+import { TooltipProvider } from "../tooltip";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { MdDashboard } from "react-icons/md";
+import { BiSolidReport } from "react-icons/bi";
+import { FaUser,FaUsers } from "react-icons/fa";
+import { PiUsersBold } from "react-icons/pi";
+import { FaLocationArrow } from "react-icons/fa6";
 const DashBoardUi = ({ children }) => {
   const [isPanelOneVisible, setIsPanelOneVisible] = useState(true);
+  const [sizes, setSizes] = useState({
+    horizontalPanelSize: 5,
+    verticalPanelOneSize: 10,
+    verticalPanelTwoSize: 70,
+  });
+  const pathname = usePathname();
   const img = "/image/drug-international-logo.png";
   const logo = "/image/header-logo.png";
-  const pathname = usePathname();
-  const [sizes, setSizes] = useState({
-    horizontalPanelSize: 4,
-    verticalPanelOneSize: 10,
-    verticalPanelTwoSize: 90,
-  });
 
-  useEffect(() => {
-    const horizontalPanelSize = Cookies.get("horizontal-panel-size");
-    const verticalPanelOneSize = Cookies.get("vertical-panel-one-size");
-    const verticalPanelTwoSize = Cookies.get("vertical-panel-two-size");
+  const horizontalPanelRef = useRef(null);
 
-    // Function to safely parse size values
-    const parseSize = (value, defaultValue) => {
-      try {
-        const parsedValue = JSON.parse(value);
-        return !isNaN(parsedValue) ? parsedValue : defaultValue;
-      } catch {
-        return defaultValue;
-      }
-    };
-
-    setSizes({
-      horizontalPanelSize: parseSize(horizontalPanelSize, 4),
-      verticalPanelOneSize: parseSize(verticalPanelOneSize, 5),
-      verticalPanelTwoSize: parseSize(verticalPanelTwoSize, 90),
-    });
+  const handleResize = useCallback((panel, newSize) => {
+    setSizes((prevSizes) => ({
+      ...prevSizes,
+      [panel]: newSize,
+    }));
+    Cookies.set(`${panel}-size`, newSize);
   }, []);
-
-  useEffect(() => {
-    setSizes((prevSizes) => ({
-      ...prevSizes,
-      horizontalPanelSize: isPanelOneVisible ? 4 : 0,
-    }));
-  }, [isPanelOneVisible]);
-
-  const handleResize = (newSize) => {
-    setSizes((prevSizes) => ({
-      ...prevSizes,
-      horizontalPanelSize: newSize,
-    }));
-    Cookies.set("horizontal-panel-size", JSON.stringify(newSize));
-  };
 
   return (
     <TooltipProvider>
@@ -78,15 +52,16 @@ const DashBoardUi = ({ children }) => {
           </button>
         )}
 
-        <ResizablePanelGroup
+        <PanelGroup
           direction="vertical"
           style={{ height: "100%", width: "100%" }}
         >
           {pathname !== "/dashboard/map" && (
-            <ResizablePanel
+            <Panel
               defaultSize={sizes.verticalPanelOneSize}
-              minSize={6}
+              minSize={8}
               maxSize={15}
+              className=" border-gray-300"
             >
               <div className="flex h-full items-center justify-between bg-gray-200 px-5">
                 <div className="flex h-full items-center justify-center">
@@ -102,49 +77,56 @@ const DashBoardUi = ({ children }) => {
                   </button>
                 </div>
                 <div>
-                  <SidebarProfile logo={logo}></SidebarProfile>
+                  <SidebarProfile logo={logo} />
                 </div>
-                <UserNav img={img}></UserNav>
+                <UserNav img={img} />
               </div>
-            </ResizablePanel>
+            </Panel>
           )}
 
-          <ResizableHandle />
+          <PanelResizeHandle className="bg-gray-200 border-b border-gray-300" />
 
-          <ResizablePanel defaultSize={sizes.verticalPanelTwoSize} minSize={10}>
-            <ResizablePanelGroup
-              direction="horizontal"
-              style={{ height: "100%" }}
-              key={isPanelOneVisible}
-            >
+          <Panel
+            defaultSize={sizes.verticalPanelTwoSize}
+            minSize={10}
+            className="flex flex-col"
+          >
+            <PanelGroup direction="horizontal" style={{ height: "100%" }}>
               {isPanelOneVisible && (
-                <ResizablePanel
+                <Panel
+                  ref={horizontalPanelRef}
                   defaultSize={sizes.horizontalPanelSize}
-                  minSize={6}
-                  onResize={(e, dir, ref, delta) => {
-                    const newSize = sizes.horizontalPanelSize + (delta?.width || delta?.deltaX || 0);
-                    handleResize(newSize);
+                  minSize={5}
+                  className="border-r border-gray-300"
+                  onResize={(size) => {
+                    handleResize("horizontalPanelSize", size);
                   }}
                 >
-                  <div className="flex h-full items-center justify-center bg-gray-300">
+                  <div className="flex h-full  bg-gray-300">
                     <SidebarComponent
-                      horizontalPanelSize={sizes.horizontalPanelSize}
+                      width={sizes.horizontalPanelSize}
                       links={[
-                        { title: "Inbox", icon: Inbox },
-                        { title: "Drafts", icon: File },
-                        { title: "Sent", icon: Send },
-                        { title: "Junk", icon: ArchiveX },
-                        { title: "Trash", icon: Trash2 },
-                        { title: "Archive", icon: Archive },
+                        { title: "Dashboard", url: "/", icon: MdDashboard },
+                        {
+                          title: "User",
+                          icon: FaUser,
+                          
+                          subLinks: [
+                            { title: "Marketing", url: "/dashboard/marketing", icon: FaUsers },
+                            { title: "MPC & PA", url: "/mpcpa", icon: PiUsersBold },
+                          ],
+                        },
+                        { title: "Reports", url: "/", icon: BiSolidReport },
+                        { title: "Tracking Info", url: "/map", icon: FaLocationArrow },
                       ]}
                     />
                   </div>
-                </ResizablePanel>
+                </Panel>
               )}
 
-              <ResizableHandle />
+              <PanelResizeHandle className="bg-gray-200 border-r border-gray-300" />
 
-              <ResizablePanel defaultSize={90} minSize={70}>
+              <Panel defaultSize={95} minSize={85} className="flex-1">
                 <div
                   className={`flex flex-col h-full ${
                     pathname !== "/dashboard/map" ? "overflow-y-auto" : ""
@@ -152,10 +134,10 @@ const DashBoardUi = ({ children }) => {
                 >
                   {children}
                 </div>
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </ResizablePanel>
-        </ResizablePanelGroup>
+              </Panel>
+            </PanelGroup>
+          </Panel>
+        </PanelGroup>
       </div>
     </TooltipProvider>
   );

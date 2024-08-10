@@ -10,7 +10,7 @@ const HomeComponent = () => {
   return (
     <>
       <div>
-        <div className=" py-5">
+        <div className=" px-2 py-5">
           <MonthReport></MonthReport>
         </div>
         <div className="flex flex-wrap justify-center gap-5 py-5">
