@@ -29,15 +29,12 @@ export function UserNav({img}) {
               Profile
              
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              Billing
-              
-            </DropdownMenuItem>
+           
             <DropdownMenuItem>
               Settings
-              {/* <DropdownMenuShortcut>S</DropdownMenuShortcut> */}
+          
             </DropdownMenuItem>
-            <DropdownMenuItem>New Team</DropdownMenuItem>
+           
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
