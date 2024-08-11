@@ -1,6 +1,5 @@
-
+"use client"
 import React from "react";
-
 import {
   Select,
   SelectContent,
@@ -11,12 +10,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
-
-const DesignationSelect = ({designations}) => {
-  
+const DesignationSelect = ({ designations, onDesignationSelect }) => {
   return (
-    <Select className="bg-white">
+    <Select
+      className="bg-white"
+      onValueChange={(value) => onDesignationSelect(value)} 
+    >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Designation" />
       </SelectTrigger>
@@ -26,7 +25,7 @@ const DesignationSelect = ({designations}) => {
           {designations.map((designation) => (
             <SelectItem
               key={designation.designationId}
-              value={designation.designationName}
+              value={designation.designationName} 
             >
               {designation.designationName}
             </SelectItem>

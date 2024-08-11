@@ -1,10 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
+
 import { useState } from "react";
 
-const TimePicker = dynamic(() => import("react-time-picker"), { ssr: false });
-
-const TimeSelect = () => {
+const TimeSelect = (placeholder) => {
   const [value, setValue] = useState("10:00");
 
   return (
@@ -12,6 +10,7 @@ const TimeSelect = () => {
       <input
         type="time"
         name=""
+        placeholder={placeholder}
         // value={selectFromTime}
         // onChange={handleFromTimeChange}
         className="h-auto border cursor-pointer rounded-md w-[140px] p-2"

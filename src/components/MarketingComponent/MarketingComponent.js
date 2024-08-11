@@ -7,13 +7,17 @@ import EveningShift from "../Home/EveningShift/EveningShift";
 import SelectedEmployee from "./SelectedEmployee/SelectedEmployee";
 import { useQuery } from "@tanstack/react-query";
 import Table from "../Table/Table";
-import DesignationData from "@/api";
+import { AllEmployee, DesignationData } from "@/api";
 import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
 
 const MarketingComponent =  () => {
-  const { data: designations, isLoading, error } = useQuery({
+  const { data: designations } = useQuery({
     queryKey: ["designations"],
     queryFn: DesignationData,
+  });
+  const { data: allEmployee, isLoading, error } = useQuery({
+    queryKey: ["allEmployee"],
+    queryFn: AllEmployee,
   });
 
   if (isLoading) {
@@ -38,7 +42,7 @@ const MarketingComponent =  () => {
         <EveningShift></EveningShift>
       </div>
       <div className="flex flex-col justify-start items-center px-8 ">
-        <SelectedEmployee designations={designations}></SelectedEmployee>
+        <SelectedEmployee designations={designations} allEmployee={allEmployee}></SelectedEmployee>
         <Table></Table>
       </div>
     </>
