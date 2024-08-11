@@ -1,0 +1,40 @@
+
+import React from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+
+
+const DesignationSelect = ({designations}) => {
+  
+  return (
+    <Select className="bg-white">
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select Designation" />
+      </SelectTrigger>
+      <SelectContent className="bg-white h-52">
+        <SelectGroup>
+          <SelectLabel>Designation</SelectLabel>
+          {designations.map((designation) => (
+            <SelectItem
+              key={designation.designationId}
+              value={designation.designationName}
+            >
+              {designation.designationName}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+};
+
+export default DesignationSelect;

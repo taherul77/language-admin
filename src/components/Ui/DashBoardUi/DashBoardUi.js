@@ -1,26 +1,25 @@
 "use client";
-
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { HiOutlineMenu, HiOutlineMenuAlt2 } from "react-icons/hi";
-import { Archive, ArchiveX, File, Inbox, Send, Trash2 } from "lucide-react";
+import { MdDashboard } from "react-icons/md";
+import { BiSolidReport } from "react-icons/bi";
+import { FaUser, FaUsers } from "react-icons/fa";
+import { PiUsersBold } from "react-icons/pi";
+import { FaLocationArrow } from "react-icons/fa6";
 import SidebarProfile from "../SidebarProfile/SidebarProfile";
 import { UserNav } from "@/components/Table/TableComponents/UserNav";
 import SidebarComponent from "../SidebarComponent/SidebarComponent";
 import { TooltipProvider } from "../tooltip";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { MdDashboard } from "react-icons/md";
-import { BiSolidReport } from "react-icons/bi";
-import { FaUser,FaUsers } from "react-icons/fa";
-import { PiUsersBold } from "react-icons/pi";
-import { FaLocationArrow } from "react-icons/fa6";
+
 const DashBoardUi = ({ children }) => {
   const [isPanelOneVisible, setIsPanelOneVisible] = useState(true);
   const [sizes, setSizes] = useState({
-    horizontalPanelSize: 5,
-    verticalPanelOneSize: 10,
-    verticalPanelTwoSize: 70,
+    horizontalPanelSize: Cookies.get('horizontalPanelSize') || 5,
+    verticalPanelOneSize: Cookies.get('verticalPanelOneSize') || 10,
+    verticalPanelTwoSize: Cookies.get('verticalPanelTwoSize') || 70,
   });
   const pathname = usePathname();
   const img = "/image/drug-international-logo.png";
@@ -35,6 +34,16 @@ const DashBoardUi = ({ children }) => {
     }));
     Cookies.set(`${panel}-size`, newSize);
   }, []);
+
+  useEffect(() => {
+    // Reset sizes if necessary when the panel visibility changes
+    if (!isPanelOneVisible) {
+      setSizes((prevSizes) => ({
+        ...prevSizes,
+        horizontalPanelSize: 0, // Set to 0 or a small value when hidden
+      }));
+    }
+  }, [isPanelOneVisible]);
 
   return (
     <TooltipProvider>
@@ -52,10 +61,7 @@ const DashBoardUi = ({ children }) => {
           </button>
         )}
 
-        <PanelGroup
-          direction="vertical"
-          style={{ height: "100%", width: "100%" }}
-        >
+        <PanelGroup direction="vertical" style={{ height: "100%", width: "100%" }}>
           {pathname !== "/dashboard/map" && (
             <Panel
               defaultSize={sizes.verticalPanelOneSize}
@@ -102,7 +108,7 @@ const DashBoardUi = ({ children }) => {
                     handleResize("horizontalPanelSize", size);
                   }}
                 >
-                  <div className="flex h-full  bg-gray-300">
+                  <div className="flex h-full bg-gray-300">
                     <SidebarComponent
                       width={sizes.horizontalPanelSize}
                       links={[
@@ -110,14 +116,13 @@ const DashBoardUi = ({ children }) => {
                         {
                           title: "User",
                           icon: FaUser,
-                          
                           subLinks: [
                             { title: "Marketing", url: "/dashboard/marketing", icon: FaUsers },
                             { title: "MPC & PA", url: "/mpcpa", icon: PiUsersBold },
                           ],
                         },
                         { title: "Reports", url: "/", icon: BiSolidReport },
-                        { title: "Tracking Info", url: "/map", icon: FaLocationArrow },
+                        { title: "Tracking Info", url: "/dashboard/map", icon: FaLocationArrow },
                       ]}
                     />
                   </div>

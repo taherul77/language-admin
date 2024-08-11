@@ -1,9 +1,12 @@
-import React from 'react'
+import MarketingComponent from "@/components/MarketingComponent/MarketingComponent";
+import React from "react";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <MarketingComponent></MarketingComponent>
+    </>
+  );
+};
 
-export default page
+export default page;

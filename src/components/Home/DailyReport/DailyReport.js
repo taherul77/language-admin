@@ -21,7 +21,7 @@ const chartData = [
   { category: "total", count: 275, fill: "var(--color-total)" },
   { category: "active", count: 200, fill: "var(--color-active)" },
   { category: "inactive", count: 187, fill: "var(--color-inactive)" },
-  { category: "vacant", count: 173, fill: "var(--color-vacant)" },
+
 ];
 
 const chartConfig = {

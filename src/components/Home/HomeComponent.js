@@ -21,7 +21,7 @@ const HomeComponent = () => {
           <EveningShift></EveningShift>
         </div>
 
-        <Table></Table>
+    
       </div>
     </>
   );
