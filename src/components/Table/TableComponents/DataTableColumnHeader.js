@@ -5,10 +5,6 @@ import {
   CaretSortIcon,
   EyeNoneIcon,
 } from "@radix-ui/react-icons";
-import { Column } from "@tanstack/react-table";
-
-import { cn } from "@/lib/utils";
-
 import PropTypes from "prop-types";
 import { Button } from "@/components/Ui/button";
 import {
@@ -19,8 +15,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/Ui/dropdown-menu";
 
-export default function DataTableColumnHeader({ column, title, className, ...props }) {
-  if (!column.getCanSort()) {
+import { cn } from "@/lib/utils";
+
+export default function DataTableColumnHeader({
+  column,
+  title,
+  className,
+  ...props
+}) {
+  // Defaulting to false if the column object does not have getCanSort
+  const canSort = column?.getCanSort ? column.getCanSort() : false;
+  const isSorted = column?.getIsSorted ? column.getIsSorted() : null;
+
+  if (!canSort) {
     return <div className={cn(className)}>{title}</div>;
   }
 
@@ -34,16 +41,16 @@ export default function DataTableColumnHeader({ column, title, className, ...pro
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
-            {column.getIsSorted() === "desc" ? (
+            {isSorted === "desc" ? (
               <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === "asc" ? (
+            ) : isSorted === "asc" ? (
               <ArrowUpIcon className="ml-2 h-4 w-4" />
             ) : (
               <CaretSortIcon className="ml-2 h-4 w-4" />
             )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" className="bg-white">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
             <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Asc
@@ -53,10 +60,10 @@ export default function DataTableColumnHeader({ column, title, className, ...pro
             Desc
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+          {/* <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
             <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Hide
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
@@ -65,13 +72,11 @@ export default function DataTableColumnHeader({ column, title, className, ...pro
 
 DataTableColumnHeader.propTypes = {
   column: PropTypes.shape({
-    getCanSort: PropTypes.func.isRequired,
-    getIsSorted: PropTypes.func.isRequired,
-    toggleSorting: PropTypes.func.isRequired,
-    toggleVisibility: PropTypes.func.isRequired,
+    getCanSort: PropTypes.func,
+    getIsSorted: PropTypes.func,
+    toggleSorting: PropTypes.func,
+    toggleVisibility: PropTypes.func,
   }).isRequired,
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
-
-

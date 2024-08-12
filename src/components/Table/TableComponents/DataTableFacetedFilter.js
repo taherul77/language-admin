@@ -55,7 +55,7 @@ const DataTableFacetedFilter = ({
         )}
       </Button>
     </PopoverTrigger>
-    <PopoverContent className="w-[200px] p-0" align="start">
+    <PopoverContent className="w-[200px] p-0 bg-white" align="start">
       <Command>
         <CommandInput placeholder={title} />
         <CommandList>

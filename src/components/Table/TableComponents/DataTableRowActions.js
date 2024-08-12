@@ -1,58 +1,29 @@
-"use client";
+import { rowSchema } from "@/components/Table/Data/Schema";
 
-import React from "react";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-
-
-
-import PropTypes from "prop-types";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/Ui/dropdown-menu";
 import { Button } from "@/components/Ui/button";
-import { labels } from "../Data/Data"
-import { taskSchema } from "../Data/Schema"
-function DataTableRowActions({ row }) {
-  const task = taskSchema.parse(row.original);
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/Ui/dropdown-menu";
 
+const DataTableRowActions = ({ row }) => {
+  const parsedData = rowSchema.safeParse(row.original); // Use safeParse to avoid crashes
+
+  if (!parsedData.success) {
+    console.error("Error parsing row data:", parsedData.error);
+    return null;
+  }
+
+  const data = parsedData.data;
+
+  // Your actions component logic
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-        >
-          <DotsHorizontalIcon className="h-4 w-4" />
-          <span className="sr-only">Open menu</span>
-        </Button>
+        <Button>Actions</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+      <DropdownMenuContent>
+        {/* Your actions */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-DataTableRowActions.propTypes = {
-  row: PropTypes.object.isRequired,
 };
 
 export default DataTableRowActions;

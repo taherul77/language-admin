@@ -13,3 +13,10 @@ export async function AllEmployee() {
     }
     return res.json();
 }
+export async function AllLocationEmployee() {
+    const res = await fetch('http://103.219.160.253:5051/empgps_tracking/empTrackInfo/allEmpGpsTrackInfos');
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+    return res.json();
+}
