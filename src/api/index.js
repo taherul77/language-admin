@@ -1,22 +1,16 @@
-export async function DesignationData() {
-    const res = await fetch('http://103.219.160.253:5051/empgps_tracking/hrvdesignation/findAllHrvdesignationByAsStatus');
-    if (!res.ok) {
-        throw new Error('Failed to fetch data');
+export async function fetchData(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error(`Failed to fetch data: ${res.statusText}`);
+        }
+        return res.json();
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
     }
-    return res.json();
 }
 
-export async function AllEmployee() {
-    const res = await fetch('http://103.219.160.253:5051/empgps_tracking/bovEmpInfo/findAllBovEmployeeInfos');
-    if (!res.ok) {
-        throw new Error('Failed to fetch data');
-    }
-    return res.json();
-}
-export async function AllLocationEmployee() {
-    const res = await fetch('http://103.219.160.253:5051/empgps_tracking/empTrackInfo/allEmpGpsTrackInfos');
-    if (!res.ok) {
-        throw new Error('Failed to fetch data');
-    }
-    return res.json();
-}
+export const DesignationData = () => fetchData('http://103.219.160.253:5051/empgps_tracking/hrvdesignation/findAllHrvdesignationByAsStatus');
+export const AllEmployee = () => fetchData('http://103.219.160.253:5051/empgps_tracking/bovEmpInfo/findAllBovEmployeeInfos');
+export const AllLocationEmployee = () => fetchData('http://103.219.160.253:5051/empgps_tracking/empTrackInfo/allEmpGpsTrackInfos');

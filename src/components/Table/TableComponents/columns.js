@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // src/components/Table/TableComponents/columns.js
 import { Checkbox } from "@/components/Ui/checkbox";
 import DataTableColumnHeader from "./DataTableColumnHeader";
 import { Badge } from "@/components/Ui/badge";
 import DataTableRowActions from "./DataTableRowActions";
 import Image from "next/image";
-
+import { useState } from "react";
+const defaultImage = "/image/drug-international-logo.png";
 export const staticColumns = [
   {
     id: "select",
@@ -181,6 +183,8 @@ export const Columns = [
         {row.getValue("employeName")}
       </div>
     ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: "gpsDataTime",
@@ -199,21 +203,42 @@ export const Columns = [
     cell: ({ row }) => (
       <div className="w-[200px]">{row.getValue("gpslocalName")}</div>
     ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: "profPhoto",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Profile Photo" />
     ),
-    cell: ({ row }) => (
-      <Image
-        src={row.getValue("profPhoto")}
-        alt="Profile"
-        height={100}
-        width={100}
-        style={{ display: "flex", justifyItems: "center", alignItems: "center", width: '50px', height: '50px', borderRadius: '50%' }}
-      />
-    ),
+    cell: ({ row }) => {
+      const [imageSrc, setImageSrc] = useState(row.getValue("profPhoto"));
+
+      const handleError = () => {
+        setImageSrc(defaultImage);
+      };
+
+      return (
+        <Image
+          src={imageSrc}
+          alt="Profile"
+          height={50}
+          width={50}
+         
+          style={{
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center",
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+          }}
+          onError={handleError}
+        />
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: "bateryPct",
@@ -237,6 +262,8 @@ export const Columns = [
         </div>
       );
     },
+    enableSorting: false,
+    enableHiding: false,
   },
   
   {
@@ -247,6 +274,8 @@ export const Columns = [
     cell: ({ row }) => (
       <div className="w-[100px]">{row.getValue("mlatitute")}</div>
     ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: "mlongitute",
@@ -256,6 +285,8 @@ export const Columns = [
     cell: ({ row }) => (
       <div className="w-[100px]">{row.getValue("mlongitute")}</div>
     ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     id: "actions",

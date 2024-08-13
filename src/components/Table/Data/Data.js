@@ -11,7 +11,7 @@ import {
   
 
   
-  export const activeStatusFlag = [
+  export const gpsDataFlag = [
     {
       value: 1,
       label: "Active",

@@ -8,7 +8,7 @@ import { Table } from "@tanstack/react-table";
 import PropTypes from 'prop-types';
 
 // Import statuses and priorities
-import { activeStatusFlag} from '../Data/Data';
+import { gpsDataFlag} from '../Data/Data';
 
 export function DataTableToolbar({ table }) {
     
@@ -25,12 +25,12 @@ export function DataTableToolbar({ table }) {
           }
           className="h-8 w-[200px] lg:w-[300px]"
         /> 
-        {table.getColumn("activeStatusFlag") && (
+        {table.getColumn("gpsDataFlag") && (
           <DataTableFacetedFilter
-            column={table.getColumn("activeStatusFlag")}
+            column={table.getColumn("gpsDataFlag")}
             title="Active Status"
             className="bg-white"
-            options={activeStatusFlag}
+            options={gpsDataFlag}
           />
         )}
        
