@@ -87,60 +87,94 @@ const MarketingComponent = () => {
       activeEmployees: activeEmps,
     };
   }, [nonVacantEmployees, filteredAllLocationEmployee]);
+
+
+
+
+
   const {
     morningShiftEmployees,
     eveningShiftEmployees,
     inactiveMorningEmployees,
     inactiveEveningEmployees,
   } = useMemo(() => {
+    if (!allEmployee || !allLocationEmployee) {
+      return {
+        morningShiftEmployees: [],
+        eveningShiftEmployees: [],
+        inactiveMorningEmployees: [],
+        inactiveEveningEmployees: [],
+      };
+    }
+  
     const morningShiftMap = new Map();
     const eveningShiftMap = new Map();
     const inactiveMorningEmployees = [];
     const inactiveEveningEmployees = [];
-
-    allLocationEmployee?.forEach((employee) => {
-      const gpsTime = new Date(employee.gpsDataDateTime).getHours();
-
-      if (gpsTime >= 6 && gpsTime < 14) {
+  
+    allLocationEmployee.forEach((employee) => {
+      // Skip VACANT employees
+      if (employee.empName === "VACANT") {
+        return;
+      }
+  
+      const [time, period] = employee.gpsDataTime.split(" ");
+      const [hours, minutes] = time.split(":").map(Number);
+  
+      let gpsHour = hours;
+      if (period === "PM" && hours !== 12) {
+        gpsHour += 12;
+      } else if (period === "AM" && hours === 12) {
+        gpsHour = 0;
+      }
+  
+      // Morning shift (6:00 AM to 1:59 PM)
+      if (gpsHour >= 6 && gpsHour < 14) {
         const existing = morningShiftMap.get(employee.mkgProfNo);
         if (
           !existing ||
-          new Date(employee.gpsDataDateTime) >
-            new Date(existing.gpsDataDateTime)
+          new Date(employee.gpsDataDateTime) > new Date(existing.gpsDataDateTime)
         ) {
           morningShiftMap.set(employee.mkgProfNo, employee);
         }
-      } else if (gpsTime >= 14 && gpsTime < 22) {
+      }
+  
+      // Evening shift (2:00 PM to 9:59 PM)
+      else if (gpsHour >= 14 && gpsHour < 22) {
         const existing = eveningShiftMap.get(employee.mkgProfNo);
         if (
           !existing ||
-          new Date(employee.gpsDataDateTime) >
-            new Date(existing.gpsDataDateTime)
+          new Date(employee.gpsDataDateTime) > new Date(existing.gpsDataDateTime)
         ) {
           eveningShiftMap.set(employee.mkgProfNo, employee);
         }
       }
     });
+  
     const morningShiftEmployees = Array.from(morningShiftMap.values());
     const eveningShiftEmployees = Array.from(eveningShiftMap.values());
-
-    allEmployee?.forEach((employee) => {
+  
+    allEmployee.forEach((employee) => {
+      if (employee.empName === "VACANT") {
+        return;
+      }
+  
       const isMorningActive = morningShiftEmployees.some(
         (emp) => emp.mkgProfNo === employee.mkgProfNo
       );
       const isEveningActive = eveningShiftEmployees.some(
         (emp) => emp.mkgProfNo === employee.mkgProfNo
       );
-
+  
       if (!isMorningActive) {
         inactiveMorningEmployees.push(employee);
       }
-
+  
       if (!isEveningActive) {
         inactiveEveningEmployees.push(employee);
       }
     });
-
+  
     return {
       morningShiftEmployees,
       eveningShiftEmployees,
@@ -148,11 +182,19 @@ const MarketingComponent = () => {
       inactiveEveningEmployees,
     };
   }, [allEmployee, allLocationEmployee]);
-
+  
   const totalMorningEmployees = morningShiftEmployees.length;
   const totalEveningEmployees = eveningShiftEmployees.length;
   const totalInactiveMorning = inactiveMorningEmployees.length;
   const totalInactiveEvening = inactiveEveningEmployees.length;
+  
+  console.log("totalMorningEmployees", morningShiftEmployees);
+  console.log("totalEveningEmployees", eveningShiftEmployees);
+  
+
+
+
+
 
   if (isLoadingDesignations || isLoadingEmployees || isLoadingLocations) {
     return (
