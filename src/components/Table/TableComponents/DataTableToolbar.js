@@ -4,15 +4,21 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import React from 'react';
 import DataTableFacetedFilter from './DataTableFacetedFilter';
 import DataTableViewOptions from './DataTableViewOptions';
-import { Table } from "@tanstack/react-table";
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/navigation'; 
 
-// Import statuses and priorities
-import { gpsDataFlag} from '../Data/Data';
 
-export function DataTableToolbar({ table }) {
-    
+import { gpsDataFlag } from '../Data/Data';
+
+export function DataTableToolbar({ table, selectedRow }) {
+  const router = useRouter(); 
+
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const handleSearchOnMap = () => {
+    console.log('Selected rows:', selectedRow); 
+    router.push('/dashboard/map'); 
+  };
 
   return (
     <div className="flex items-center justify-between">
@@ -44,12 +50,22 @@ export function DataTableToolbar({ table }) {
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
+        <Button
+          variant="primary"
+          onClick={handleSearchOnMap}
+          className="h-8 px-4 border-gray-200 border-2"
+        >
+          Search on Map
+        </Button>
       </div>
-      <DataTableViewOptions table={table} />
+      <div className="flex items-center space-x-2">
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   );
 }
 
 DataTableToolbar.propTypes = {
   table: PropTypes.object.isRequired,
+  selectedRow: PropTypes.array.isRequired, // Ensure selectedRow is an array
 };

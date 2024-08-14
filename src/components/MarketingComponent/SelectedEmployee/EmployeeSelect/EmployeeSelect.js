@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/Ui/select';
 
-const EmployeeSelect = ({ employees }) => {
+const EmployeeSelect = ({ employees,setEmployeeSelected }) => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleSelectChange = (value) => {
     const selected = employees.find(employee => employee.mkgProfNo === value);
     if (selected) {
+      
       setSelectedEmployee(selected);
+      setEmployeeSelected(selected.mkgProfNo)
     }
   };
+
 
   return (
     <Select className="bg-white" onValueChange={handleSelectChange}>

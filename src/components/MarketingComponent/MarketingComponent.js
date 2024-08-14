@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import WeekReport from "../Home/WeekReport/WeekReport";
 import DailyReport from "@/components/MarketingComponent/DailyReport/DailyReport";
 import MorningShift from "@/components/MarketingComponent/MorningShift/MorningShift";
@@ -8,17 +8,24 @@ import SelectedEmployee from "./SelectedEmployee/SelectedEmployee";
 import { useQuery } from "@tanstack/react-query";
 import { DesignationData, AllEmployee, AllLocationEmployee } from "@/api";
 import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
+import useStore from "@/store/store";
 
 const MarketingComponent = () => {
+  const { setDesignations,setAllEmployee } = useStore();
   const {
     data: designations,
     error: designationError,
     isLoading: isLoadingDesignations,
+    isSuccess: designationSuccess,
   } = useQuery({
     queryKey: ["designations"],
     queryFn: DesignationData,
   });
-
+  useEffect(() => {
+    if (designations) {
+      setDesignations(designations);
+    }
+  }, [designations, setDesignations]);
   const {
     data: allEmployee,
     error: allEmployeeError,
@@ -27,7 +34,11 @@ const MarketingComponent = () => {
     queryKey: ["allEmployee"],
     queryFn: AllEmployee,
   });
-
+  useEffect(() => {
+    if (allEmployee) {
+      setAllEmployee(allEmployee);
+    }
+  }, [allEmployee, setAllEmployee]);
   const {
     data: allLocationEmployee,
     isLoading: isLoadingLocations,
@@ -88,10 +99,6 @@ const MarketingComponent = () => {
     };
   }, [nonVacantEmployees, filteredAllLocationEmployee]);
 
-
-
-
-
   const {
     morningShiftEmployees,
     eveningShiftEmployees,
@@ -106,75 +113,77 @@ const MarketingComponent = () => {
         inactiveEveningEmployees: [],
       };
     }
-  
+
     const morningShiftMap = new Map();
     const eveningShiftMap = new Map();
     const inactiveMorningEmployees = [];
     const inactiveEveningEmployees = [];
-  
+
     allLocationEmployee.forEach((employee) => {
       // Skip VACANT employees
       if (employee.empName === "VACANT") {
         return;
       }
-  
+
       const [time, period] = employee.gpsDataTime.split(" ");
       const [hours, minutes] = time.split(":").map(Number);
-  
+
       let gpsHour = hours;
       if (period === "PM" && hours !== 12) {
         gpsHour += 12;
       } else if (period === "AM" && hours === 12) {
         gpsHour = 0;
       }
-  
+
       // Morning shift (6:00 AM to 1:59 PM)
       if (gpsHour >= 6 && gpsHour < 14) {
         const existing = morningShiftMap.get(employee.mkgProfNo);
         if (
           !existing ||
-          new Date(employee.gpsDataDateTime) > new Date(existing.gpsDataDateTime)
+          new Date(employee.gpsDataDateTime) >
+            new Date(existing.gpsDataDateTime)
         ) {
           morningShiftMap.set(employee.mkgProfNo, employee);
         }
       }
-  
+
       // Evening shift (2:00 PM to 9:59 PM)
       else if (gpsHour >= 14 && gpsHour < 22) {
         const existing = eveningShiftMap.get(employee.mkgProfNo);
         if (
           !existing ||
-          new Date(employee.gpsDataDateTime) > new Date(existing.gpsDataDateTime)
+          new Date(employee.gpsDataDateTime) >
+            new Date(existing.gpsDataDateTime)
         ) {
           eveningShiftMap.set(employee.mkgProfNo, employee);
         }
       }
     });
-  
+
     const morningShiftEmployees = Array.from(morningShiftMap.values());
     const eveningShiftEmployees = Array.from(eveningShiftMap.values());
-  
+
     allEmployee.forEach((employee) => {
       if (employee.empName === "VACANT") {
         return;
       }
-  
+
       const isMorningActive = morningShiftEmployees.some(
         (emp) => emp.mkgProfNo === employee.mkgProfNo
       );
       const isEveningActive = eveningShiftEmployees.some(
         (emp) => emp.mkgProfNo === employee.mkgProfNo
       );
-  
+
       if (!isMorningActive) {
         inactiveMorningEmployees.push(employee);
       }
-  
+
       if (!isEveningActive) {
         inactiveEveningEmployees.push(employee);
       }
     });
-  
+
     return {
       morningShiftEmployees,
       eveningShiftEmployees,
@@ -182,19 +191,16 @@ const MarketingComponent = () => {
       inactiveEveningEmployees,
     };
   }, [allEmployee, allLocationEmployee]);
-  
+
   const totalMorningEmployees = morningShiftEmployees.length;
   const totalEveningEmployees = eveningShiftEmployees.length;
   const totalInactiveMorning = inactiveMorningEmployees.length;
   const totalInactiveEvening = inactiveEveningEmployees.length;
-  
-  console.log("totalMorningEmployees", morningShiftEmployees);
-  console.log("totalEveningEmployees", eveningShiftEmployees);
-  
 
 
 
 
+ 
 
   if (isLoadingDesignations || isLoadingEmployees || isLoadingLocations) {
     return (
@@ -232,10 +238,12 @@ const MarketingComponent = () => {
           activeEmployees={totalMorningEmployees}
           totalInactiveMorning={totalInactiveMorning}
         />
-        <EveningShift
-          totalEveningEmployees={totalEveningEmployees}
-          totalInactiveEvening={totalInactiveEvening}
-        />
+        {totalEveningEmployees > 0 && (
+          <EveningShift
+            totalEveningEmployees={totalEveningEmployees}
+            totalInactiveEvening={totalInactiveEvening}
+          />
+        )}
       </div>
       <div className="flex flex-col justify-start items-center px-8">
         <SelectedEmployee

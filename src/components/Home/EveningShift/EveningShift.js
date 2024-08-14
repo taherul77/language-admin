@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import useStore from "@/store/store";
 
 const chartData = [
   { category: "active", count: 400, fill: "var(--color-active)" },
@@ -52,6 +53,9 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 const EveningShift = () => {
+  const { designations } = useStore();
+  console.log(designations);
+  
   return (
     <div>
       <Card className="flex flex-col">
