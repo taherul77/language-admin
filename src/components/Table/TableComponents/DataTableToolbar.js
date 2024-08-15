@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/Ui/button';
 import { Input } from '@/components/Ui/input';
 import { Cross2Icon } from '@radix-ui/react-icons';
@@ -6,17 +7,22 @@ import DataTableFacetedFilter from './DataTableFacetedFilter';
 import DataTableViewOptions from './DataTableViewOptions';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/navigation'; 
-
-
 import { gpsDataFlag } from '../Data/Data';
+import useStore from '@/store/store';
 
 export function DataTableToolbar({ table, selectedRow }) {
+  const { setSelectedRow } = useStore(); // Access setSelectedRow from Zustand store
   const router = useRouter(); 
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
   const handleSearchOnMap = () => {
-    console.log('Selected rows:', selectedRow); 
+    console.log('Selected rows:', selectedRow);
+    
+    // Set the selected rows in the Zustand store
+    setSelectedRow(selectedRow);
+    
+    // Navigate to the map view
     router.push('/dashboard/map'); 
   };
 
