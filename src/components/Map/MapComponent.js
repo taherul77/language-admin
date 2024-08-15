@@ -10,8 +10,6 @@ import Image from "next/image";
 import "./style.css";
 
 const MapComponent = () => {
-  const defaultImage = "/image/drug-international-logo.png";
-
 
   const { selectedRow } = useStore();
   
