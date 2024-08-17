@@ -11,7 +11,8 @@ import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
 import useStore from "@/store/store";
 
 const MarketingComponent = () => {
-  const { setDesignations, setAllEmployee,setAllLocationEmployee } = useStore();
+  const { setDesignations, setAllEmployee, setAllLocationEmployee } = useStore();
+  
   const {
     data: designations,
     error: designationError,
@@ -21,11 +22,13 @@ const MarketingComponent = () => {
     queryKey: ["designations"],
     queryFn: DesignationData,
   });
+
   useEffect(() => {
     if (designations) {
       setDesignations(designations);
     }
   }, [designations, setDesignations]);
+
   const {
     data: allEmployee,
     error: allEmployeeError,
@@ -58,6 +61,7 @@ const MarketingComponent = () => {
       setAllLocationEmployee(allLocationEmployee);
     }
   }, [allLocationEmployee, setAllLocationEmployee]);
+
   const filteredAllLocationEmployee = useMemo(() => {
     return allLocationEmployee?.reduce((acc, current) => {
       const existingEmployee = acc.find(
@@ -204,6 +208,11 @@ const MarketingComponent = () => {
   const totalInactiveMorning = inactiveMorningEmployees.length;
   const totalInactiveEvening = inactiveEveningEmployees.length;
 
+  // Check current time to determine if it is evening
+  const now = new Date();
+  const currentHour = now.getHours();
+  const isEvening = currentHour >= 14 && currentHour < 22;
+
   if (isLoadingDesignations || isLoadingEmployees || isLoadingLocations) {
     return (
       <div>
@@ -240,7 +249,7 @@ const MarketingComponent = () => {
           activeEmployees={totalMorningEmployees}
           totalInactiveMorning={totalInactiveMorning}
         />
-        {totalEveningEmployees > 0 && (
+        {isEvening && (
           <EveningShift
             totalEveningEmployees={totalEveningEmployees}
             totalInactiveEvening={totalInactiveEvening}

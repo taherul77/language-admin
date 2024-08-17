@@ -16,7 +16,7 @@
     color: #ffffff !important;
     border-radius: 50% !important;
     
-    padding: 3px !important;
+    /* padding: 3px !important; */
     white-space: nowrap; /* Ensure text stays in a single line */
   }
   
