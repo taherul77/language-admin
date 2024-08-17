@@ -20,7 +20,11 @@ const MapComponent = () => {
       iconSize: L.point(33, 33, true),
     });
   };
-
+  const formatDate = (timestamp) => {
+    const date = new Date(Number(timestamp)); // Convert timestamp to number
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return date.toLocaleDateString(undefined, options); // Format date
+  };
   const position = [24, 90];
   return (
     <div>
@@ -70,7 +74,7 @@ const MapComponent = () => {
                             {location.employeName} ({location.mkgProfNo})
                           </h4>
                           <span className="text-xs">
-                            Date: {location.gpsDataDate}
+                            Date: {formatDate(location.gpsDataDate)}
                           </span>
                           <br />
                           <span className="text-xs">

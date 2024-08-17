@@ -84,7 +84,7 @@ const MorningShift = ({
         </CardContent>
         <CardFooter className="flex-col gap-2 text-xl text-black">
           <div className="flex items-center gap-2 font-bold leading-none">
-            Evening Report
+            Morning Report
           </div>
         </CardFooter>
       </Card>

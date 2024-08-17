@@ -11,7 +11,7 @@ import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
 import useStore from "@/store/store";
 
 const MarketingComponent = () => {
-  const { setDesignations,setAllEmployee } = useStore();
+  const { setDesignations, setAllEmployee,setAllLocationEmployee } = useStore();
   const {
     data: designations,
     error: designationError,
@@ -34,11 +34,13 @@ const MarketingComponent = () => {
     queryKey: ["allEmployee"],
     queryFn: AllEmployee,
   });
+
   useEffect(() => {
     if (allEmployee) {
       setAllEmployee(allEmployee);
     }
   }, [allEmployee, setAllEmployee]);
+
   const {
     data: allLocationEmployee,
     isLoading: isLoadingLocations,
@@ -51,6 +53,11 @@ const MarketingComponent = () => {
     cacheTime: Infinity,
   });
 
+  useEffect(() => {
+    if (allLocationEmployee) {
+      setAllLocationEmployee(allLocationEmployee);
+    }
+  }, [allLocationEmployee, setAllLocationEmployee]);
   const filteredAllLocationEmployee = useMemo(() => {
     return allLocationEmployee?.reduce((acc, current) => {
       const existingEmployee = acc.find(
@@ -196,11 +203,6 @@ const MarketingComponent = () => {
   const totalEveningEmployees = eveningShiftEmployees.length;
   const totalInactiveMorning = inactiveMorningEmployees.length;
   const totalInactiveEvening = inactiveEveningEmployees.length;
-
-
-
-
- 
 
   if (isLoadingDesignations || isLoadingEmployees || isLoadingLocations) {
     return (

@@ -48,7 +48,7 @@ const DashBoardUi = ({ children }) => {
   return (
     <TooltipProvider>
       <div style={{ height: "100vh", width: "100vw" }}>
-        {pathname === "/dashboard/map" && (
+        {(pathname === "/dashboard/map" || pathname === "/dashboard/single-employee/map" || pathname === "/dashboard/single-employee/roadmap") && (
           <button
             onClick={() => setIsPanelOneVisible(!isPanelOneVisible)}
             className="fixed top-0 right-0 m-4 z-50 bg-gray-200 p-2 rounded"
@@ -62,7 +62,7 @@ const DashBoardUi = ({ children }) => {
         )}
 
         <PanelGroup direction="vertical" style={{ height: "100%", width: "100%" }}>
-          {pathname !== "/dashboard/map" && (
+          {(pathname !== "/dashboard/map" && pathname !== "/dashboard/single-employee/map" && pathname !== "/dashboard/single-employee/roadmap") && (
             <Panel
               defaultSize={sizes.verticalPanelOneSize}
               minSize={8}
@@ -118,7 +118,7 @@ const DashBoardUi = ({ children }) => {
                           icon: FaUser,
                           subLinks: [
                             { title: "Marketing", url: "/dashboard/marketing", icon: FaUsers },
-                            { title: "MPC & PA", url: "/mpcpa", icon: PiUsersBold },
+                            { title: "MRC & PA", url: "/mpcpa", icon: PiUsersBold },
                           ],
                         },
                         { title: "Reports", url: "/", icon: BiSolidReport },
@@ -134,7 +134,7 @@ const DashBoardUi = ({ children }) => {
               <Panel defaultSize={95} minSize={85} className="flex-1">
                 <div
                   className={`flex flex-col h-full ${
-                    pathname !== "/dashboard/map" ? "overflow-y-auto" : ""
+                    pathname !== "/dashboard/map" && pathname !== "/dashboard/single-employee/map" && pathname !== "/dashboard/single-employee/roadmap" ? "overflow-y-auto" : ""
                   }`}
                 >
                   {children}

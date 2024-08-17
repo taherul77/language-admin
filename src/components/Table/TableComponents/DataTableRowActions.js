@@ -1,26 +1,52 @@
 import { rowSchema } from "@/components/Table/Data/Schema";
-
 import { Button } from "@/components/Ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/Ui/dropdown-menu";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/Ui/dropdown-menu";
+import useStore from "@/store/store";
+import { useRouter } from "next/navigation";
 const DataTableRowActions = ({ row }) => {
+  const { setSingleData } = useStore();
+  const router = useRouter();
   const parsedData = rowSchema.safeParse(row.original); // Use safeParse to avoid crashes
-
-  if (!parsedData.success) {
-    console.error("Error parsing row data:", parsedData.error);
-    return null;
-  }
-
   const data = parsedData.data;
 
-  // Your actions component logic
+
+
+
+
+  const handleSingleOnMap = () => {
+   
+    setSingleData(data);
+    router.push("/dashboard/single-employee/map");
+  };
+  const handleRoadMap = () => {
+    // Set the selected rows in the Zustand store
+    setSingleData(data);
+    router.push("/dashboard/single-employee/roadmap");
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>Actions</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {/* Your actions */}
+        <div className="flex flex-col bg-white">
+          <Button
+            variant="default"
+            onClick={handleSingleOnMap}
+          >
+            Map
+          </Button>
+          <Button
+            variant="default"
+            onClick={handleRoadMap}
+          >
+            Road Map
+          </Button>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
