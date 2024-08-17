@@ -16,10 +16,9 @@ const SingleEmployeeMapComponent = () => {
   const formatDate = (timestamp) => {
     const date = new Date(Number(timestamp)); 
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return date.toLocaleDateString(undefined, options); // Format date
+    return date.toLocaleDateString(undefined, options); 
   };
 
- 
   const isValidLocation =
     singleData && singleData.mlatitute && singleData.mlongitute;
 
