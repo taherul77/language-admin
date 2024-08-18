@@ -5,63 +5,12 @@ import DailyReport from "@/components/MarketingComponent/DailyReport/DailyReport
 import MorningShift from "@/components/MarketingComponent/MorningShift/MorningShift";
 import EveningShift from "@/components/MarketingComponent/EveningShift/EveningShift";
 import SelectedEmployee from "./SelectedEmployee/SelectedEmployee";
-import { useQuery } from "@tanstack/react-query";
-import { DesignationData, AllEmployee, AllLocationEmployee } from "@/api";
-import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
+
 import useStore from "@/store/store";
 
 const MarketingComponent = () => {
-  const { setDesignations, setAllEmployee, setAllLocationEmployee } = useStore();
+  const { allLocationEmployee ,allEmployee,designations} = useStore();
   
-  const {
-    data: designations,
-    error: designationError,
-    isLoading: isLoadingDesignations,
-    isSuccess: designationSuccess,
-  } = useQuery({
-    queryKey: ["designations"],
-    queryFn: DesignationData,
-  });
-
-  useEffect(() => {
-    if (designations) {
-      setDesignations(designations);
-    }
-  }, [designations, setDesignations]);
-
-  const {
-    data: allEmployee,
-    error: allEmployeeError,
-    isLoading: isLoadingEmployees,
-  } = useQuery({
-    queryKey: ["allEmployee"],
-    queryFn: AllEmployee,
-  });
-
-  useEffect(() => {
-    if (allEmployee) {
-      setAllEmployee(allEmployee);
-    }
-  }, [allEmployee, setAllEmployee]);
-
-  const {
-    data: allLocationEmployee,
-    isLoading: isLoadingLocations,
-    error: locationError,
-  } = useQuery({
-    queryKey: ["allLocationEmployee"],
-    queryFn: AllLocationEmployee,
-    staleTime: 15 * 60 * 1000,
-    refetchInterval: 15 * 60 * 1000,
-    cacheTime: Infinity,
-  });
-
-  useEffect(() => {
-    if (allLocationEmployee) {
-      setAllLocationEmployee(allLocationEmployee);
-    }
-  }, [allLocationEmployee, setAllLocationEmployee]);
-
   const filteredAllLocationEmployee = useMemo(() => {
     return allLocationEmployee?.reduce((acc, current) => {
       const existingEmployee = acc.find(
@@ -213,24 +162,7 @@ const MarketingComponent = () => {
   const currentHour = now.getHours();
   const isEvening = currentHour >= 14 && currentHour < 22;
 
-  if (isLoadingDesignations || isLoadingEmployees || isLoadingLocations) {
-    return (
-      <div>
-        <SkeletonComponent />
-      </div>
-    );
-  }
 
-  if (designationError || allEmployeeError || locationError) {
-    return (
-      <div>
-        Error:{" "}
-        {designationError?.message ||
-          allEmployeeError?.message ||
-          locationError?.message}
-      </div>
-    );
-  }
 
   return (
     <>
@@ -240,7 +172,7 @@ const MarketingComponent = () => {
       <div className="flex flex-wrap justify-center gap-5 pb-5">
         <WeekReport />
         <DailyReport
-          isLoading={isLoadingLocations}
+          
           totalEmployees={totalNonVacantEmployees}
           activeCount={activeCount}
           inactiveCount={inactiveCount}

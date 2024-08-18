@@ -32,15 +32,15 @@ const DataTableRowActions = ({ row }) => {
       <DropdownMenuTrigger asChild>
         <Button>Actions</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <div className="flex flex-col bg-white">
-          <Button
+      <DropdownMenuContent className="bg-white">
+        <div className="flex flex-col gap-2 m-2 ">
+          <Button className="border border-gray-500"
             variant="default"
             onClick={handleSingleOnMap}
           >
             Map
           </Button>
-          <Button
+          <Button className="border border-gray-400"
             variant="default"
             onClick={handleRoadMap}
           >

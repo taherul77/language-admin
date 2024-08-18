@@ -2,7 +2,7 @@
 
 import { Checkbox } from "@/components/Ui/checkbox";
 import DataTableColumnHeader from "./DataTableColumnHeader";
-import { Badge } from "@/components/Ui/badge";
+
 import DataTableRowActions from "./DataTableRowActions";
 import Image from "next/image";
 import { useState } from "react";
@@ -88,7 +88,7 @@ export const Columns = [
       <div className="w-[200px]">{row.getValue("gpslocalName")}</div>
     ),
     enableSorting: false,
-    enableHiding: false,
+    
   },
   {
     accessorKey: "profPhoto",
@@ -122,7 +122,7 @@ export const Columns = [
       );
     },
     enableSorting: false,
-    enableHiding: false,
+  
   },
   {
     accessorKey: "bateryPct",
@@ -178,7 +178,10 @@ export const Columns = [
       <DataTableColumnHeader column={column} title="Action" />
     ),
     cell: ({ row }) => <DataTableRowActions row={row} />,
+    enableSorting: false,
+    enableHiding: false,
   },
+  
 ];
 
 

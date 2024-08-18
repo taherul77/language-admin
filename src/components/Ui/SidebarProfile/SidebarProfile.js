@@ -11,7 +11,7 @@ const SidebarProfile = ({ logo }) => {
         href="/"
       >
         <Image
-          loading="lazy"
+          
           height={60}
           width={100}
           src={logo}

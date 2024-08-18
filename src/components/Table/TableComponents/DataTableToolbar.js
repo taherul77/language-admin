@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/Ui/button";
+
 import { Input } from "@/components/Ui/input";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import React from "react";
@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import { useRouter } from "next/navigation";
 import { gpsDataFlag } from "../Data/Data";
 import useStore from "@/store/store";
+import { Button } from "@/components/Ui/button";
 
 export function DataTableToolbar({ table, selectedRow }) {
   const { setSelectedRow } = useStore(); // Access setSelectedRow from Zustand store
@@ -38,14 +39,14 @@ export function DataTableToolbar({ table, selectedRow }) {
           className="h-8 w-[200px] lg:w-[300px]"
         />
 
-        {table.getColumn("gpsDataFlag") && (
+        {/* {table.getColumn("gpsDataFlag") && (
           <DataTableFacetedFilter
             column={table.getColumn("gpsDataFlag")}
             title="Active Status"
             className="bg-white"
             options={gpsDataFlag}
           />
-        )}
+        )} */}
 
         {isFiltered && (
           <Button
@@ -60,7 +61,7 @@ export function DataTableToolbar({ table, selectedRow }) {
         <Button
           variant="primary"
           onClick={handleSearchOnMap}
-          className="h-8 px-4 border-gray-200 border-2"
+          className="h-10 px-4 border-gray-200 border-2"
         >
           Search on Map
         </Button>

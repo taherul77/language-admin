@@ -1,6 +1,7 @@
-import HomeComponent from "@/components/Home/HomeComponent";
-import WeekReport from "@/components/Home/WeekReport/WeekReport";
-import useStore from "@/store/store";
+"use client"
+import dynamic from "next/dynamic";
+const HomeComponent = dynamic(() => import("../../components/Home/HomeComponent.js"), { ssr: false });
+
 import React from "react";
 
 const page = () => {

@@ -93,7 +93,8 @@
 // export default DataTablePagination;
 
 "use client";
-import { Button } from "@/components/Ui/button";
+
+
 import {
   Select,
   SelectContent,
@@ -110,6 +111,7 @@ import {
 } from "@radix-ui/react-icons";
 
 import PropTypes from "prop-types";
+import { Button } from "@/components/Ui/button";
 
 export function DataTablePagination({ table }) {
   return (
