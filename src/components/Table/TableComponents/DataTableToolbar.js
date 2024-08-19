@@ -17,15 +17,7 @@ export function DataTableToolbar({ table, selectedRow }) {
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  const handleSearchOnMap = () => {
-    console.log("Selected rows:", selectedRow);
 
-    // Set the selected rows in the Zustand store
-    setSelectedRow(selectedRow);
-
-    // Navigate to the map view
-    router.push("/dashboard/map");
-  };
 
   return (
     <div className="flex items-center justify-between">
@@ -58,13 +50,7 @@ export function DataTableToolbar({ table, selectedRow }) {
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
-        <Button
-          variant="primary"
-          onClick={handleSearchOnMap}
-          className="h-10 px-4 border-gray-200 border-2"
-        >
-          Search on Map
-        </Button>
+        
       </div>
       <div className="flex items-center space-x-2">
         <DataTableViewOptions table={table} />

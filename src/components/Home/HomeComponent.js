@@ -104,12 +104,12 @@ const HomeComponent = () => {
       <div className="px-2 py-5">
         <MonthReport />
       </div>
-      <div className="flex flex-wrap justify-center gap-5 py-5">
+      {/* <div className="flex flex-wrap justify-center gap-5 py-5">
         <WeekReport />
         <DailyReport />
         <MorningShift />
         <EveningShift />
-      </div>
+      </div> */}
     </div>
   );
 };

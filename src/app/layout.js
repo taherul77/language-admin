@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Employee Tracking System",
-  description: "Drug Interaction Limited Employee Tracking System (DIL ETS)",
+  title: "SHINING EDUCATION",
+  description: "SHINING EDUCATION DASHBOARD",
 };
 
 export default function RootLayout({ children }) {

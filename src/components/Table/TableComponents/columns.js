@@ -172,15 +172,15 @@ export const Columns = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: "actions",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Action" />
-    ),
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: "actions",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Action" />
+  //   ),
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   
 ];
 
