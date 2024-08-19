@@ -6,7 +6,6 @@ import MorningShift from "./MorningShift/MorningShift";
 import EveningShift from "./EveningShift/EveningShift";
 import MonthReport from "./MonthReport/MonthReport";
 
-import { AllEmployee, DesignationData } from "@/api";
 import useStore from "@/store/store";
 import SkeletonComponent from "../Ui/SkeletonComponent/SkeletonComponent";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 const HomeComponent = () => {
   const { setDesignations, setAllEmployee, setAllLocationEmployee } = useStore();
 
+  // Fetching allLocationEmployee data using Redis
   const {
     data: allLocationEmployee,
     isLoading: isLoadingLocations,
@@ -39,14 +39,24 @@ const HomeComponent = () => {
     }
   }, [allLocationEmployee, setAllLocationEmployee]);
 
+  // Fetching designations data using Redis
   const {
     data: designations,
-    error: designationError,
     isLoading: isLoadingDesignations,
-    isSuccess: designationSuccess,
+    error: designationError,
   } = useQuery({
     queryKey: ["designations"],
-    queryFn: DesignationData,
+    queryFn: async () => {
+      const response = await fetch('/api/redis/designations');
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+      }
+      return response.json();
+    },
+    staleTime: 15 * 60 * 1000,
+    refetchInterval: 15 * 60 * 1000,
+    cacheTime: Infinity,
   });
 
   useEffect(() => {
@@ -55,13 +65,24 @@ const HomeComponent = () => {
     }
   }, [designations, setDesignations]);
 
+  // Fetching allEmployee data using Redis
   const {
     data: allEmployee,
-    error: allEmployeeError,
     isLoading: isLoadingEmployees,
+    error: allEmployeeError,
   } = useQuery({
     queryKey: ["allEmployee"],
-    queryFn: AllEmployee,
+    queryFn: async () => {
+      const response = await fetch('/api/redis/allEmployee');
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
+      }
+      return response.json();
+    },
+    staleTime: 15 * 60 * 1000,
+    refetchInterval: 15 * 60 * 1000,
+    cacheTime: Infinity,
   });
 
   useEffect(() => {
@@ -74,28 +95,26 @@ const HomeComponent = () => {
     return <SkeletonComponent />;
   }
 
-  if (locationError) {
+  if (locationError || designationError || allEmployeeError) {
     return (
       <div>
-        Error: {designationError?.message || allEmployeeError?.message || locationError?.message}
+        Error: {locationError?.message || designationError?.message || allEmployeeError?.message}
       </div>
     );
   }
 
   return (
-    <>
-      <div>
-        <div className="px-2 py-5">
-          <MonthReport />
-        </div>
-        <div className="flex flex-wrap justify-center gap-5 py-5">
-          <WeekReport />
-          <DailyReport />
-          <MorningShift />
-          <EveningShift />
-        </div>
+    <div>
+      <div className="px-2 py-5">
+        <MonthReport />
       </div>
-    </>
+      <div className="flex flex-wrap justify-center gap-5 py-5">
+        <WeekReport />
+        <DailyReport />
+        <MorningShift />
+        <EveningShift />
+      </div>
+    </div>
   );
 };
 
