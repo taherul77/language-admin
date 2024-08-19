@@ -54,9 +54,7 @@ const HomeComponent = () => {
       }
       return response.json();
     },
-    staleTime: 15 * 60 * 1000,
-    refetchInterval: 15 * 60 * 1000,
-    cacheTime: Infinity,
+   
   });
 
   useEffect(() => {
@@ -80,9 +78,7 @@ const HomeComponent = () => {
       }
       return response.json();
     },
-    staleTime: 15 * 60 * 1000,
-    refetchInterval: 15 * 60 * 1000,
-    cacheTime: Infinity,
+   
   });
 
   useEffect(() => {
