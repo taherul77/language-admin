@@ -6,7 +6,7 @@ const MarketingComponent = dynamic(() => import("../../../../components/Marketin
 const page = () => {
   return (
     <>
-      <MarketingComponent></MarketingComponent>
+      {/* <MarketingComponent></MarketingComponent> */}
     </>
   );
 };
