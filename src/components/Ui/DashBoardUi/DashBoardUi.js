@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { HiOutlineMenu, HiOutlineMenuAlt2 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { BiSolidReport } from "react-icons/bi";
-import { FaUser, FaUsers } from "react-icons/fa";
+
+import { FaUser, FaUsers,FaAddressBook  } from "react-icons/fa";
 import { GiArchiveRegister } from "react-icons/gi";
 import SidebarProfile from "../SidebarProfile/SidebarProfile";
 import { UserNav } from "@/components/Table/TableComponents/UserNav";
@@ -65,7 +65,7 @@ const DashBoardUi = ({ children }) => {
             <Panel
               defaultSize={sizes.verticalPanelOneSize}
               minSize={8}
-              maxSize={15}
+              maxSize={20}
               className=" border-gray-300"
             >
               <div className="flex h-full items-center justify-between bg-gray-200 px-5">
@@ -121,6 +121,7 @@ const DashBoardUi = ({ children }) => {
                         
                         { title: "Apply Info", url: "/apply", icon: GiArchiveRegister },
                         { title: "Mail Info", url: "/mail", icon: IoMdMailUnread },
+                        { title: "Address Info", url: "/address", icon: FaAddressBook },
                         { title: "Seminar Info", url: "/seminar", icon: FaUsers },
                       ]}
                     />
@@ -130,7 +131,7 @@ const DashBoardUi = ({ children }) => {
 
               <PanelResizeHandle className="bg-gray-200 border-r border-gray-300" />
 
-              <Panel defaultSize={95} minSize={85} className="flex-1">
+              <Panel defaultSize={90} minSize={70} className="flex-1">
                 <div
                   className={`flex flex-col h-full ${
                     pathname !== "/dashboard/map" && pathname !== "/dashboard/single-employee/map" && pathname !== "/dashboard/single-employee/roadmap" ? "overflow-y-auto" : ""
