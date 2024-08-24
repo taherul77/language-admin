@@ -116,13 +116,11 @@ const DashBoardUi = ({ children }) => {
                         {
                           title: "User",
                           icon: FaUser,
-                          subLinks: [
-                            { title: "Marketing", url: "/dashboard/marketing", icon: FaUsers },
-                            { title: "MRC & PA", url: "/mpcpa", icon: PiUsersBold },
-                          ],
+                          url: "/dashboard"
+                          
                         },
                         { title: "Reports", url: "/", icon: BiSolidReport },
-                        { title: "Tracking Info", url: "/dashboard/map", icon: FaLocationArrow },
+                       
                       ]}
                     />
                   </div>

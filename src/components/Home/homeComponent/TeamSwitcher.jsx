@@ -8,6 +8,14 @@ import {
 } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Ui/dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/Ui/popover"
+import { Button } from "@/components/Ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/Ui/avatar"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/Ui/command"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/Ui/select"
+import { Input } from "postcss"
+import { Label } from "@/components/Ui/label"
 
 
 const groups = [
@@ -40,7 +48,7 @@ const groups = [
 export default function TeamSwitcher({ className }) {
   const [open, setOpen] = React.useState(false)
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false)
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>(
+  const [selectedTeam, setSelectedTeam] = React.useState(
     groups[0].teams[0]
   )
 

@@ -6,14 +6,15 @@ import { addDays, format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
-import { Popover, PopoverTrigger } from "@/components/Ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/Ui/popover"
 import { Button } from "@/components/Ui/button"
+import { Calendar } from "@/components/Ui/calendar"
 
 
 export function CalendarDateRangePicker({
   className,
 }) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
+  const [date, setDate] = React.useState({
     from: new Date(2023, 0, 20),
     to: addDays(new Date(2023, 0, 20), 20),
   })

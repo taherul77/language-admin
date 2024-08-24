@@ -1,0 +1,1 @@
+export const BASE_URL = "https://repliq-task-server-chi.vercel.app/api/v1";

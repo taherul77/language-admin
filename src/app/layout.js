@@ -1,18 +1,20 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
+// src/app/ClientProviders.js (Client Component)
+"use client";
 
-const inter = Inter({ subsets: ["latin"] });
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "@/lib/context/AuthProvider";
+import "./globals.css"; // Import global styles if you have any
 
-export const metadata = {
-  title: "SHINING EDUCATION",
-  description: "SHINING EDUCATION DASHBOARD",
-};
+const queryClient = new QueryClient();
 
-export default function RootLayout({ children }) {
+export default function ClientProviders({ children }) {
   return (
     <html lang="en">
-      
-      <body className={inter.className}>{children}</body>
+      <body>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
