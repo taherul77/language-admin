@@ -6,14 +6,13 @@ import { HiOutlineMenu, HiOutlineMenuAlt2 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import { BiSolidReport } from "react-icons/bi";
 import { FaUser, FaUsers } from "react-icons/fa";
-import { PiUsersBold } from "react-icons/pi";
-import { FaLocationArrow } from "react-icons/fa6";
+import { GiArchiveRegister } from "react-icons/gi";
 import SidebarProfile from "../SidebarProfile/SidebarProfile";
 import { UserNav } from "@/components/Table/TableComponents/UserNav";
 import SidebarComponent from "../SidebarComponent/SidebarComponent";
 import { TooltipProvider } from "../tooltip";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-
+import { IoMdMailUnread } from "react-icons/io";
 const DashBoardUi = ({ children }) => {
   const [isPanelOneVisible, setIsPanelOneVisible] = useState(true);
   const [sizes, setSizes] = useState({
@@ -112,15 +111,17 @@ const DashBoardUi = ({ children }) => {
                     <SidebarComponent
                       width={sizes.horizontalPanelSize}
                       links={[
-                        { title: "Dashboard", url: "/", icon: MdDashboard },
+                        { title: "Dashboard", url: "/dashboard", icon: MdDashboard },
                         {
                           title: "User",
                           icon: FaUser,
-                          url: "/dashboard"
+                          url: "/user"
                           
                         },
-                        { title: "Reports", url: "/", icon: BiSolidReport },
-                       
+                        
+                        { title: "Apply Info", url: "/apply", icon: GiArchiveRegister },
+                        { title: "Mail Info", url: "/mail", icon: IoMdMailUnread },
+                        { title: "Seminar Info", url: "/seminar", icon: FaUsers },
                       ]}
                     />
                   </div>

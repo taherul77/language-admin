@@ -1,9 +1,9 @@
-// src/app/ClientProviders.js (Client Component)
+
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/lib/context/AuthProvider";
-import "./globals.css"; // Import global styles if you have any
+import "./globals.css"; 
 
 const queryClient = new QueryClient();
 
