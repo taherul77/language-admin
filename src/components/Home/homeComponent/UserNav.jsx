@@ -1,19 +1,7 @@
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-  } from "@/registry/new-york/ui/avatar"
-  import { Button } from "@/registry/new-york/ui/button"
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuTrigger,
-  } from "@/registry/new-york/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/Ui/avatar";
+import { Button } from "@/components/Ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/Ui/dropdown-menu";
+
   
   export function UserNav() {
     return (
