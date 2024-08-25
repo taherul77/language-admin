@@ -47,28 +47,13 @@ const DashBoardUi = ({ children }) => {
   return (
     <TooltipProvider>
       <div style={{ height: "100vh", width: "100vw" }}>
-        {(pathname === "/dashboard/map" ||
-          pathname === "/dashboard/single-employee/map" ||
-          pathname === "/dashboard/single-employee/roadmap") && (
-          <button
-            onClick={() => setIsPanelOneVisible(!isPanelOneVisible)}
-            className="fixed top-0 right-0 m-4 z-50 bg-gray-200 p-2 rounded"
-          >
-            {!isPanelOneVisible ? (
-              <HiOutlineMenu size={32} />
-            ) : (
-              <HiOutlineMenuAlt2 size={32} />
-            )}
-          </button>
-        )}
+  
 
         <PanelGroup
           direction="vertical"
           style={{ height: "100%", width: "100%" }}
         >
-          {pathname !== "/dashboard/map" &&
-            pathname !== "/dashboard/single-employee/map" &&
-            pathname !== "/dashboard/single-employee/roadmap" && (
+          
               <Panel
                 defaultSize={sizes.verticalPanelOneSize}
                 minSize={8}
@@ -94,7 +79,7 @@ const DashBoardUi = ({ children }) => {
                   <UserNav img={img} />
                 </div>
               </Panel>
-            )}
+            
 
           <PanelResizeHandle className="bg-gray-200 border-b border-gray-300" />
 
@@ -157,15 +142,11 @@ const DashBoardUi = ({ children }) => {
 
               <PanelResizeHandle className="bg-gray-200 border-r border-gray-300" />
 
-              <Panel defaultSize={90} minSize={70} className="flex-1">
+              <Panel defaultSize={90} minSize={80} className="flex-1">
                 <div
-                  className={`flex flex-col h-full ${
-                    pathname !== "/dashboard/map" &&
-                    pathname !== "/dashboard/single-employee/map" &&
-                    pathname !== "/dashboard/single-employee/roadmap"
-                      ? "overflow-y-auto"
-                      : ""
-                  }`}
+                  className={`flex flex-col h-full overflow-y-auto
+                    
+                  `}
                 >
                   {children}
                 </div>
