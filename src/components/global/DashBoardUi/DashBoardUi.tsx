@@ -66,7 +66,7 @@ const DashBoardUi: React.FC<DashBoardUiProps> = ({ children }) => {
         <PanelGroup direction="vertical" style={{ height: "100%", width: "100%" }}>
           <Panel
             defaultSize={Number(sizes.verticalPanelOneSize)}
-            minSize={4}
+            minSize={5}
             maxSize={10}
             className="border-gray-300"
           >
