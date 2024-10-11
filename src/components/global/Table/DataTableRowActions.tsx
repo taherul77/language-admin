@@ -13,9 +13,14 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import EditModal from "../Modal/EditModal/EditModal";
 import axios from "axios";  // Import axios for API calls
 import { usePathname } from "next/navigation"; // Import useRouter to get current route
+import EditFrom from "../Modal/EditModal/EditFrom/EditFrom";
 
 interface RowData {
   _id: string; // Ensure _id is a string or the appropriate type
+  name: string;
+  email: string;
+  phoneNumber: string;
+  message: string;
 }
 
 type DataTableRowActionsProps<TData extends RowData> = {
@@ -73,7 +78,9 @@ const DataTableRowActions = <TData extends RowData>({ row }: DataTableRowActions
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem onClick={handleEdit}>
-          <EditModal ModalTitle="Edit Row" rowData={row.original}>Edit</EditModal>
+          <EditModal ModalTitle="Edit Row" description="Please edit the details of the event below." onSave={() => console.log("Save action triggered")}>
+            <EditFrom rowData={row.original} />
+          </EditModal>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDelete}>
