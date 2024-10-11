@@ -82,5 +82,9 @@ export const SeminarData = () => {
   return fetchData(`${process.env.NEXT_PUBLIC_API_URL}/seminar`);
 };
 export const UserData = () => {
-  return fetchData(`${process.env.NEXT_PUBLIC_API_URL}/user`);
+  const token = process.env.NEXT_PUBLIC_API_TOKEN;
+  if (!token) {
+    throw new Error("API token is missing");
+  }
+  return fetchData(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, token);
 };

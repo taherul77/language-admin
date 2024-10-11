@@ -27,7 +27,7 @@ export default async function UserComponent () {
 console.log("userInfo",userInfo);
 
 
-  if (!Array.isArray(userInfo.result)) {
+  if (!Array?.isArray(userInfo.result)) {
     console.error("Expected applyInfo.result to be an array");
     return <div>Error: Invalid data format</div>;
   }
@@ -39,7 +39,7 @@ console.log("userInfo",userInfo);
 
 
       <div className="flex justify-center items-center my-5">
-      <UserTable user={userInfo.result}></UserTable>
+      <UserTable user={userInfo?.result}></UserTable>
       </div>
     </div>
   );

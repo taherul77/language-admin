@@ -18,6 +18,7 @@ interface Apply {
   }
 const ApplyTable = ({ apply }: ApplyTableProps) => {
  
+// console.log("apply", apply);
 
   return (
     <div className="flex justify-center items-center">

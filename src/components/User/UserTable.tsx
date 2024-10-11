@@ -18,9 +18,11 @@ interface UserTableProps {
   user: User[];
 }
 const UserTable = ({ user }: UserTableProps) => {
+  console.log("user", user);
+  
   return (
     <div className="flex justify-center items-center">
-      {user.length > 0 ? (
+      {user?.length > 0 ? (
         <DataTable columns={userColumns} data={user} />
       ) : (
         <div>No Address Information Available</div>

@@ -32,7 +32,7 @@ export default async function ApplyComponent() {
       <div className="flex justify-start items-center text-4xl bg-clip-text text-transparent bg-gradient-to-b from-[#118FC1] to-[#26794f] tracking-[0.05em]">
         Apply Information
       </div>
-      <div className="flex justify-center items-center w-full my-5">
+      <div className="flex justify-center items-center w-full ">
         {/* Pass the array of applies correctly */}
         <ApplyTable apply={applyInfo.result} />
       </div>

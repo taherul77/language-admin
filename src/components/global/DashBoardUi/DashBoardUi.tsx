@@ -112,11 +112,11 @@ const DashBoardUi: React.FC<DashBoardUiProps> = ({ children }) => {
                           url: "/",
                           icon: MdDashboard,
                         },
-                        {
-                          title: "User",
-                          icon: FaUser,
-                          url: "/user",
-                        },
+                        // {
+                        //   title: "User",
+                        //   icon: FaUser,
+                        //   url: "/user",
+                        // },
 
                         {
                           title: "Apply Info",
@@ -147,7 +147,7 @@ const DashBoardUi: React.FC<DashBoardUiProps> = ({ children }) => {
               <PanelResizeHandle className="bg-gray-200 border-r border-gray-300" />
 
               <Panel defaultSize={85} minSize={85} className="flex-1">
-                <div className={`flex flex-col h-full overflow-y-auto `}>
+                <div className={`flex flex-col max-h-screen overflow-auto `}>
                   {children}
                 </div>
               </Panel>
